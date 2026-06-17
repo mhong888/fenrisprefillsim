@@ -6,10 +6,9 @@
 <title>Fenris Auto Prefill — Demo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --navy: #0c2e4f;
     --navy-light: #1a4a72;
@@ -20,6 +19,7 @@
     --gray-50: #f8f9fa;
     --gray-100: #f1f3f5;
     --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
     --gray-400: #ced4da;
     --gray-500: #adb5bd;
     --gray-600: #6c757d;
@@ -28,475 +28,161 @@
     --danger: #dc3545;
     --danger-light: #fff5f5;
   }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-800);
-    min-height: 100vh;
-    font-size: 15px;
-    line-height: 1.6;
-  }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; font-size: 15px; line-height: 1.6; }
 
   /* HEADER */
-  .site-header {
-    background: var(--navy);
-    padding: 0 2rem;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .site-header img {
-    height: 44px;
-    display: block;
-    mix-blend-mode: screen;
-  }
-  .header-badge {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    background: rgba(255,255,255,0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.15);
-    letter-spacing: 0.3px;
-  }
+  .site-header { background: var(--navy); padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .site-header img { height: 44px; display: block; mix-blend-mode: screen; }
+  .header-badge { font-size: 12px; color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); letter-spacing: 0.3px; }
 
   /* LAYOUT */
-  .page-wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
-  }
-
-  /* STEP INDICATOR */
-  .step-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2.5rem;
-  }
-  .step-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .step-dot {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 600;
-    border: 2px solid var(--gray-400);
-    color: var(--gray-500);
-    background: var(--white);
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .step-dot.active {
-    border-color: var(--teal);
-    background: var(--teal);
-    color: var(--white);
-  }
-  .step-dot.done {
-    border-color: var(--green);
-    background: var(--green);
-    color: var(--white);
-  }
-  .step-label {
-    font-size: 13px;
-    color: var(--gray-500);
-    font-weight: 400;
-    white-space: nowrap;
-  }
-  .step-label.active {
-    color: var(--navy);
-    font-weight: 500;
-  }
-  .step-connector {
-    flex: 1;
-    height: 2px;
-    background: var(--gray-200);
-    margin: 0 10px;
-    transition: background 0.3s;
-  }
-  .step-connector.done {
-    background: var(--green);
-  }
-
-  /* CARD */
-  .card {
-    background: var(--white);
-    border-radius: 12px;
-    border: 1px solid var(--gray-200);
-    padding: 2rem;
-    margin-bottom: 1.25rem;
-  }
-  .card-title {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.35rem;
-  }
-  .card-sub {
-    font-size: 14px;
-    color: var(--gray-600);
-    margin-bottom: 1.75rem;
-    line-height: 1.5;
-  }
-
-  /* FORM */
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 1.5rem;
-  }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
-  .form-input {
-    height: 42px;
-    padding: 0 14px;
-    border: 1.5px solid var(--gray-300, #dee2e6);
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
-    color: var(--gray-800);
-    background: var(--white);
-    transition: border-color 0.15s, box-shadow 0.15s;
-    outline: none;
-  }
-  .form-input:focus {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(33,171,173,0.15);
-  }
-  .form-input.error {
-    border-color: var(--danger);
-    box-shadow: 0 0 0 3px rgba(220,53,69,0.1);
-  }
-  .field-error {
-    font-size: 12px;
-    color: var(--danger);
-    min-height: 16px;
-  }
-
-  /* BUTTONS */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 44px;
-    padding: 0 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    border: none;
-    transition: all 0.15s;
-    text-decoration: none;
-  }
-  .btn-primary {
-    background: var(--teal);
-    color: var(--white);
-  }
-  .btn-primary:hover { background: #1d9799; }
-  .btn-success {
-    background: var(--green);
-    color: var(--white);
-  }
-  .btn-success:hover { background: #7eb338; }
-  .btn-outline {
-    background: transparent;
-    color: var(--navy);
-    border: 1.5px solid var(--gray-400);
-  }
-  .btn-outline:hover { background: var(--gray-100); }
-  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-  .action-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-top: 0.5rem;
-  }
-
-  /* LOADING */
-  .loading-state {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 2rem 0;
-    color: var(--gray-600);
-    font-size: 14px;
-  }
-  .spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--gray-200);
-    border-top-color: var(--teal);
-    border-radius: 50%;
-    animation: spin 0.75s linear infinite;
-    flex-shrink: 0;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* API BANNER */
-  .api-banner {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #0f6b6b;
-    background: var(--teal-light);
-    border: 1px solid rgba(33,171,173,0.3);
-    border-radius: 20px;
-    padding: 4px 12px;
-    margin-bottom: 1.25rem;
-  }
-  .api-banner .dot {
-    width: 6px;
-    height: 6px;
-    background: var(--teal);
-    border-radius: 50%;
-    animation: pulse 1.5s ease infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  /* PREFILL SECTIONS */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding-bottom: 10px;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--gray-200);
-  }
-  .section-title {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
-  .section-icon {
-    width: 18px;
-    height: 18px;
-    color: var(--gray-500);
-  }
-  .section-badge {
-    margin-left: auto;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 2px 9px;
-    border-radius: 20px;
-    background: var(--teal-light);
-    color: #0f6b6b;
-    border: 1px solid rgba(33,171,173,0.25);
-  }
-
-  /* INFO TABLE */
-  .info-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-  .info-table tr { border-bottom: 1px solid var(--gray-100); }
-  .info-table tr:last-child { border-bottom: none; }
-  .info-table td { padding: 8px 4px; }
-  .info-table td:first-child { color: var(--gray-500); width: 45%; font-size: 13px; }
-  .info-table td:last-child { font-weight: 500; color: var(--navy); font-family: 'Inter', monospace; }
-
-  /* DRIVER CARDS */
-  .driver-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 10px;
-  }
-  .driver-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  .avatar-primary { background: #dbeffe; color: var(--navy); }
-  .avatar-secondary { background: #d7f0e8; color: #0a4c35; }
-  .driver-name { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
-  .pill {
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--gray-300, #dee2e6);
-    background: var(--white);
-    color: var(--gray-600);
-  }
-  .pill-primary { background: #dbeffe; color: var(--navy); border-color: rgba(12,46,79,0.2); font-weight: 500; }
-  .pill-household { background: var(--teal-light); color: #0f6b6b; border-color: rgba(33,171,173,0.3); font-weight: 500; }
-
-  /* VEHICLE CARDS */
-  /* ── Progressive-style vehicle cards ── */
-  .pv-wrap {
-    border: 1.5px solid #e0ddd7;
-    border-radius: 12px;
-    margin-bottom: 18px;
-    background: #fff;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .pv-wrap.selected { border-color: var(--teal); }
-
-  .pv-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 18px;
-    background: #fafafa;
-    border-bottom: 1px solid #eeebe5;
-  }
-  .pv-wrap.selected .pv-header { background: #f0fafa; }
-
-  .pv-header-left { display: flex; align-items: center; gap: 10px; }
-  .pv-car-icon { width: 22px; height: 22px; color: var(--navy); flex-shrink: 0; }
-  .pv-title { font-size: 16px; font-weight: 700; color: var(--navy); }
-
-  .pv-toggle-wrap { display: flex; align-items: center; gap: 9px; cursor: default; }
-  .pv-toggle-label { font-size: 13px; color: var(--gray-600); font-weight: 500; }
-
-  .pv-toggle {
-    width: 44px; height: 24px; border-radius: 999px;
-    background: #ccc; position: relative; cursor: pointer;
-    transition: background 0.2s; flex-shrink: 0;
-  }
-  .pv-toggle.on { background: var(--teal); }
-  .pv-toggle-knob {
-    position: absolute; top: 3px; left: 3px;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    transition: left 0.2s;
-  }
-  .pv-toggle.on .pv-toggle-knob { left: 23px; }
-
-  .pv-details { padding: 18px; }
-  .pv-field-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-  .pv-field-row:last-child { margin-bottom: 0; }
-  .pv-field { display: flex; flex-direction: column; gap: 5px; }
-  .pv-label { font-size: 12px; font-weight: 600; color: var(--navy); }
-  .req { color: #c0392b; }
-  .pv-select {
-    padding: 9px 12px; border: 1.5px solid #ddd;
-    border-radius: 8px; font-size: 14px; color: var(--navy);
-    background: #fafaf8; font-family: inherit; cursor: pointer;
-  }
-  .pv-select:focus { outline: none; border-color: var(--teal); }
-
-  /* SUMMARY BAR */
-  .summary-bar {
-    background: var(--gray-50);
-    border: 1px solid var(--gray-200);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--gray-600);
-    margin-bottom: 1.25rem;
-  }
-  .summary-bar strong { color: var(--navy); }
-  .summary-bar.warn { color: var(--danger); background: var(--danger-light); border-color: rgba(220,53,69,0.2); }
-
-  /* SUCCESS */
-  .success-wrap {
-    text-align: center;
-    padding: 3rem 1rem 2rem;
-  }
-  .success-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--green-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-  }
-  .success-icon svg { width: 32px; height: 32px; color: var(--green); }
-  .success-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.5rem;
-  }
-  .success-body {
-    font-size: 15px;
-    color: var(--gray-600);
-    max-width: 420px;
-    margin: 0 auto 1.5rem;
-    line-height: 1.6;
-  }
-  .ref-chip {
-    display: inline-block;
-    font-family: 'Inter', monospace;
-    font-size: 13px;
-    background: var(--gray-100);
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    padding: 6px 16px;
-    color: var(--gray-600);
-  }
-
-  /* STEPS VISIBILITY */
+  .page-wrap { max-width: 1060px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   .step-view { display: none; }
   .step-view.active { display: block; }
 
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate { animation: fadeUp 0.22s ease both; }
-  .animate:nth-child(2) { animation-delay: 0.05s; }
-  .animate:nth-child(3) { animation-delay: 0.1s; }
-  .animate:nth-child(4) { animation-delay: 0.15s; }
+  /* TWO-COL for story panels */
+  .two-col { display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start; }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } .story-col { order: -1; } }
 
-  /* RESPONSIVE */
-  @media (max-width: 560px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .form-group.full { grid-column: 1; }
-    .pv-field-row { grid-template-columns: 1fr; }
-    .page-wrap { padding: 1.5rem 1rem 3rem; }
-    .card { padding: 1.5rem; }
-  }
+  /* STEP BAR */
+  .step-bar { display: flex; align-items: center; margin-bottom: 2rem; }
+  .step-item { display: flex; align-items: center; gap: 8px; }
+  .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; border: 2px solid var(--gray-400); color: var(--gray-500); background: var(--white); flex-shrink: 0; transition: all 0.2s; }
+  .step-dot.active { border-color: var(--teal); background: var(--teal); color: var(--white); }
+  .step-dot.done { border-color: var(--green); background: var(--green); color: var(--white); }
+  .step-label { font-size: 12px; color: var(--gray-500); white-space: nowrap; }
+  .step-label.active { color: var(--navy); font-weight: 500; }
+  .step-connector { flex: 1; height: 2px; background: var(--gray-200); margin: 0 8px; transition: background 0.3s; }
+  .step-connector.done { background: var(--green); }
+
+  /* CARD */
+  .card { background: var(--white); border-radius: 12px; border: 1px solid var(--gray-200); padding: 2rem; margin-bottom: 1.25rem; }
+  .card-title { font-size: 22px; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .card-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 1.75rem; line-height: 1.5; }
+
+  /* STORY PANEL */
+  .story-panel { background: var(--navy); border-radius: 12px; padding: 1.5rem; color: #fff; position: sticky; top: 20px; }
+  .story-tag { font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  .story-avatar { width: 52px; height: 52px; border-radius: 50%; background: rgba(33,171,173,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; }
+  .story-name { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .story-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.65; }
+  .story-callout { margin-top: 14px; background: rgba(255,255,255,0.08); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 12px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+  /* GATE */
+  .gate-wrap { max-width: 480px; margin: 3rem auto; text-align: center; }
+  .gate-logo { font-size: 48px; margin-bottom: 1rem; }
+  .gate-title { font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .gate-sub { font-size: 14px; color: var(--gray-600); margin-bottom: 1.75rem; line-height: 1.6; }
+  .gate-row { display: flex; gap: 10px; }
+  .gate-input { flex: 1; height: 48px; padding: 0 16px; border: 1.5px solid var(--gray-400); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
+  .gate-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(33,171,173,0.15); }
+  .gate-input.error { border-color: var(--danger); }
+  .gate-note { font-size: 11px; color: var(--gray-500); margin-top: 8px; }
+  .field-error { font-size: 12px; color: var(--danger); min-height: 16px; display: block; margin-top: 3px; }
+
+  /* PERSONA PICKER */
+  .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 0.5rem; }
+  @media (max-width: 560px) { .persona-grid { grid-template-columns: 1fr; } }
+  .persona-card { border: 2px solid var(--gray-200); border-radius: 12px; padding: 1.25rem 1rem; text-align: center; cursor: pointer; transition: all 0.15s; background: var(--white); position: relative; }
+  .persona-card:hover:not(.coming-soon) { border-color: var(--teal); background: var(--teal-light); }
+  .persona-card.selected { border-color: var(--teal); background: var(--teal-light); }
+  .persona-card.coming-soon { opacity: 0.5; cursor: not-allowed; }
+  .persona-emoji { font-size: 32px; margin-bottom: 8px; display: block; }
+  .persona-name { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .persona-type { font-size: 11px; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; }
+  .persona-badge { position: absolute; top: 8px; right: 8px; font-size: 10px; font-weight: 600; background: var(--gray-200); color: var(--gray-600); padding: 2px 7px; border-radius: 10px; letter-spacing: 0.3px; }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
+  @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label { font-size: 11px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; }
+  .form-input, .form-select { height: 42px; padding: 0 14px; border: 1.5px solid var(--gray-300); border-radius: 8px; font-size: 14px; font-family: inherit; color: var(--gray-800); background: var(--white); outline: none; transition: border-color 0.15s, box-shadow 0.15s; width: 100%; }
+  .form-input:focus, .form-select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(33,171,173,0.15); }
+
+  /* BUTTONS */
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 24px; border-radius: 8px; font-size: 14px; font-weight: 500; font-family: inherit; cursor: pointer; border: none; transition: all 0.15s; }
+  .btn-primary { background: var(--teal); color: var(--white); }
+  .btn-primary:hover { background: #1d9799; }
+  .btn-primary:disabled { background: var(--gray-400); cursor: not-allowed; }
+  .btn-success { background: var(--green); color: var(--white); }
+  .btn-success:hover { background: #7eb338; }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--gray-400); }
+  .btn-outline:hover { background: var(--gray-100); }
+  .action-row { display: flex; align-items: center; gap: 10px; padding-top: 0.5rem; }
+
+  /* API BANNER */
+  .api-banner { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #0f6b6b; background: var(--teal-light); border: 1px solid rgba(33,171,173,0.3); border-radius: 20px; padding: 4px 12px; margin-bottom: 1.25rem; }
+  .api-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+  /* SECTION HEADERS */
+  .section-header { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; margin-bottom: 14px; border-bottom: 1px solid var(--gray-200); }
+  .section-title { font-size: 11px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; }
+  .section-badge { margin-left: auto; font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 20px; background: var(--teal-light); color: #0f6b6b; border: 1px solid rgba(33,171,173,0.25); }
+
+  /* VEHICLE CARDS */
+  .pv-wrap { border: 1.5px solid var(--gray-200); border-radius: 12px; margin-bottom: 16px; background: #fff; overflow: hidden; transition: border-color 0.2s; }
+  .pv-wrap.selected { border-color: var(--teal); }
+  .pv-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #fafafa; border-bottom: 1px solid #eeebe5; }
+  .pv-wrap.selected .pv-header { background: #f0fafa; }
+  .pv-title { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .pv-toggle-wrap { display: flex; align-items: center; gap: 9px; }
+  .pv-toggle-label { font-size: 13px; color: var(--gray-600); font-weight: 500; }
+  .pv-toggle { width: 44px; height: 24px; border-radius: 999px; background: #ccc; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+  .pv-toggle.on { background: var(--teal); }
+  .pv-toggle-knob { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2); transition: left 0.2s; }
+  .pv-toggle.on .pv-toggle-knob { left: 23px; }
+  .pv-details { padding: 16px 18px; }
+  .pv-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .pv-field-row:last-child { margin-bottom: 0; }
+  .pv-field { display: flex; flex-direction: column; gap: 5px; }
+  .pv-label { font-size: 12px; font-weight: 600; color: var(--navy); }
+  .pv-select { padding: 9px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 14px; color: var(--navy); background: #fafaf8; font-family: inherit; cursor: pointer; }
+  .pv-select:focus { outline: none; border-color: var(--teal); }
+
+  /* SUMMARY BAR */
+  .summary-bar { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--gray-600); margin-bottom: 1.25rem; }
+  .summary-bar strong { color: var(--navy); }
+  .summary-bar.warn { color: var(--danger); background: var(--danger-light); border-color: rgba(220,53,69,0.2); }
+
+  /* HOUSEHOLD MEMBER CARD */
+  .hm-card { border: 2px solid var(--gray-200); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+  .hm-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .hm-identity { display: flex; align-items: center; gap: 12px; }
+  .hm-avatar { width: 44px; height: 44px; border-radius: 50%; background: #d7f0e8; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #0a4c35; flex-shrink: 0; }
+  .hm-name { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .hm-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  .pill { font-size: 11px; padding: 2px 9px; border-radius: 20px; border: 1px solid var(--gray-300); background: var(--white); color: var(--gray-600); }
+  .pill-teal { background: var(--teal-light); color: #0f6b6b; border-color: rgba(33,171,173,0.3); }
+  .insure-row { display: flex; gap: 8px; align-items: center; }
+  .insure-label { font-size: 13px; font-weight: 500; color: var(--gray-800); margin-right: 4px; }
+  .insure-btn { height: 34px; padding: 0 16px; border-radius: 8px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; border: 1.5px solid var(--gray-300); background: var(--white); color: var(--gray-600); transition: all 0.15s; }
+  .insure-btn.yes.selected { border-color: var(--green); background: var(--green-light); color: #2d6a00; }
+  .insure-btn.no.selected { border-color: var(--danger); background: var(--danger-light); color: var(--danger); }
+  .insure-btn:hover { border-color: var(--teal); }
+
+  /* DETAIL FORM — member */
+  .detail-section { margin-bottom: 1.5rem; }
+  .detail-section-title { font-size: 12px; font-weight: 600; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-100); }
+
+  /* SUCCESS */
+  .success-wrap { text-align: center; padding: 3rem 1rem 2rem; }
+  .success-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 32px; }
+  .success-title { font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .success-body { font-size: 15px; color: var(--gray-600); max-width: 480px; margin: 0 auto 1rem; line-height: 1.6; }
+  .success-time { font-size: 14px; color: var(--teal); font-weight: 600; margin-bottom: 1.5rem; }
+  .ref-chip { display: inline-block; font-family: monospace; font-size: 13px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 6px; padding: 6px 16px; color: var(--gray-600); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+  .animate { animation: fadeUp 0.22s ease both; }
+
+  /* LOADING */
+  .loading-state { display: flex; align-items: center; gap: 12px; padding: 2rem 0; color: var(--gray-600); font-size: 14px; }
+  .spinner { width: 20px; height: 20px; border: 2px solid var(--gray-200); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.75s linear infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
@@ -508,396 +194,574 @@
 
 <main class="page-wrap">
 
-  <!-- STEP BAR -->
-  <div class="step-bar" id="stepBar">
-    <div class="step-item">
-      <div class="step-dot active" id="dot1">1</div>
-      <span class="step-label active" id="lbl1">Applicant info</span>
+<!-- ========== STEP 0: EMAIL GATE ========== -->
+<div class="step-view active" id="view0">
+  <div style="max-width:500px;margin:3rem auto;text-align:center;">
+    <div style="font-size:52px;margin-bottom:1rem;">🚗</div>
+    <p class="card-title" style="margin-bottom:0.4rem;">See Fenris Prefill in Action</p>
+    <p style="font-size:14px;color:var(--gray-600);margin-bottom:2rem;line-height:1.6;">Enter your email to access the interactive demo and see how Fenris prefills insurance applications in real time.</p>
+    <div class="gate-row">
+      <input class="gate-input" id="gateEmail" type="email" placeholder="you@company.com" autocomplete="email">
+      <button class="btn btn-primary" onclick="submitGate()">Access Demo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
-    <div class="step-connector" id="line1"></div>
-    <div class="step-item">
-      <div class="step-dot" id="dot2">2</div>
-      <span class="step-label" id="lbl2">Review &amp; select</span>
-    </div>
-    <div class="step-connector" id="line2"></div>
-    <div class="step-item">
-      <div class="step-dot" id="dot3">3</div>
-      <span class="step-label" id="lbl3">Submit</span>
-    </div>
+    <span class="field-error" id="gateErr"></span>
+    <p class="gate-note">For demonstration purposes only. No data is stored or transmitted.</p>
   </div>
+</div>
 
-  <!-- STEP 1: APPLICANT FORM -->
-  <div class="step-view active" id="view1">
+<!-- ========== STEP 1: PERSONA PICKER ========== -->
+<div class="step-view" id="view1">
+  <div style="max-width:680px;margin:0 auto;">
     <div class="card">
-      <p class="card-title">Tell us about the applicant</p>
-      <p class="card-sub">We'll use this information to match records and prefill their policy details via the Fenris Prefill API.</p>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label" for="firstName">First name</label>
-          <input class="form-input" id="firstName" type="text" placeholder="e.g. Jane" autocomplete="given-name">
-          <span class="field-error" id="err-firstName"></span>
+      <p class="card-title">Choose a Demo Scenario</p>
+      <p class="card-sub">Select an applicant to begin the prefill simulation. Jenny Everywhere is available now — more scenarios coming soon.</p>
+      <div class="persona-grid">
+        <div class="persona-card" id="persona-jenny" onclick="selectPersona('jenny')">
+          <span class="persona-emoji">👩</span>
+          <p class="persona-name">Jenny Everywhere</p>
+          <p class="persona-type">Auto Prefill</p>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="lastName">Last name</label>
-          <input class="form-input" id="lastName" type="text" placeholder="e.g. Smith" autocomplete="family-name">
-          <span class="field-error" id="err-lastName"></span>
+        <div class="persona-card coming-soon">
+          <span class="persona-badge">Coming Soon</span>
+          <span class="persona-emoji">🧔</span>
+          <p class="persona-name">Hugo Danner</p>
+          <p class="persona-type">Property Prefill</p>
         </div>
-        <div class="form-group full">
-          <label class="form-label" for="address">Street address</label>
-          <input class="form-input" id="address" type="text" placeholder="123 Main St" autocomplete="street-address">
-          <span class="field-error" id="err-address"></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="city">City</label>
-          <input class="form-input" id="city" type="text" placeholder="e.g. Springfield" autocomplete="address-level2">
-          <span class="field-error" id="err-city"></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="state">State</label>
-          <input class="form-input" id="state" type="text" placeholder="e.g. IL" maxlength="2" autocomplete="address-level1">
-          <span class="field-error" id="err-state"></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="zip">ZIP code</label>
-          <input class="form-input" id="zip" type="text" placeholder="e.g. 62701" maxlength="5">
-          <span class="field-error" id="err-zip"></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="dob">Date of birth</label>
-          <input class="form-input" id="dob" type="text" placeholder="MM/DD/YYYY" maxlength="10">
-          <span class="field-error" id="err-dob"></span>
+        <div class="persona-card coming-soon">
+          <span class="persona-badge">Coming Soon</span>
+          <span class="persona-emoji">👵</span>
+          <p class="persona-name">Sibilla Wardley</p>
+          <p class="persona-type">Commercial Prefill</p>
         </div>
       </div>
-
-      <div class="action-row">
-        <button class="btn btn-primary" onclick="submitForm()">
-          Look up records
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="action-row" style="margin-top:1.25rem;">
+        <button class="btn btn-primary" id="personaBtn" onclick="startJenny()" disabled>
+          Start Simulation
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- STEP 2: PREFILL RESULTS -->
-  <div class="step-view" id="view2">
-    <div class="card">
-      <div id="loadingState" class="loading-state">
-        <div class="spinner"></div>
-        Querying Fenris Prefill API&hellip;
-      </div>
+<!-- ========== STEP 2: APPLICANT INFO (prefilled) ========== -->
+<div class="step-view" id="view2">
+  <!-- step bar -->
+  <div class="step-bar" id="stepBar2">
+    <div class="step-item"><div class="step-dot active" id="sd1">1</div><span class="step-label active">Applicant Info</span></div>
+    <div class="step-connector" id="sc1"></div>
+    <div class="step-item"><div class="step-dot" id="sd2">2</div><span class="step-label">Vehicles</span></div>
+    <div class="step-connector" id="sc2"></div>
+    <div class="step-item"><div class="step-dot" id="sd3">3</div><span class="step-label">Household</span></div>
+    <div class="step-connector" id="sc3"></div>
+    <div class="step-item"><div class="step-dot" id="sd4">4</div><span class="step-label">Member Detail</span></div>
+    <div class="step-connector" id="sc4"></div>
+    <div class="step-item"><div class="step-dot" id="sd5">5</div><span class="step-label">Confirm</span></div>
+  </div>
 
-      <div id="prefillContent" style="display:none;">
-        <div class="api-banner">
-          <span class="dot"></span>
-          Prefill data matched successfully
-        </div>
-        <p class="card-title">Review prefilled information</p>
-        <p class="card-sub">Records were found and prefilled below. Select the vehicles you'd like to include in this policy, then continue.</p>
-
-        <!-- APPLICANT INFO -->
-        <div style="margin-bottom:1.75rem;" class="animate">
-          <div class="section-header">
-            <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-            <span class="section-title">Primary applicant</span>
-            <span class="section-badge">Verified</span>
+  <div class="two-col">
+    <div class="main-col">
+      <div class="card animate">
+        <div class="api-banner"><span class="api-dot"></span>Prefill data matched &mdash; Jenny Everywhere</div>
+        <p class="card-title">Applicant Information</p>
+        <p class="card-sub">Jenny's information has been prefilled from her intake form. Review and confirm before continuing.</p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" id="f_first" type="text" value="Jenny">
           </div>
-          <table class="info-table" id="applicantTable"></table>
-        </div>
-
-        <!-- DRIVERS -->
-        <div style="margin-bottom:1.75rem;" class="animate">
-          <div class="section-header">
-            <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span class="section-title">Household drivers</span>
-            <span class="section-badge">2 found</span>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" id="f_last" type="text" value="Everywhere">
           </div>
-          <div id="driversContainer"></div>
-        </div>
-
-        <!-- VEHICLES -->
-        <div style="margin-bottom:1.75rem;" class="animate">
-          <div class="section-header">
-            <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v5h-3"/><circle cx="16" cy="17" r="2"/><circle cx="9" cy="17" r="2"/></svg>
-            <span class="section-title">Vehicle Information</span>
-            <span class="section-badge">Select to include</span>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input class="form-input" id="f_dob" type="text" value="11/10/1962">
           </div>
-          <p style="font-size:13px;color:var(--gray-600);margin-bottom:14px;">We found these vehicles registered to your address. Would you like to add them to your policy?</p>
-          <div id="vehiclesContainer"></div>
-        </div>
-
-        <!-- SUMMARY + ACTIONS -->
-        <div class="animate">
-          <div class="summary-bar" id="summaryBar">No vehicles selected yet.</div>
-          <div class="action-row">
-            <button class="btn btn-outline" onclick="goBack()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-              Back
-            </button>
-            <button class="btn btn-success" onclick="submitQuote()">
-              Submit for quote
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+          <div class="form-group">
+            <label class="form-label">Gender</label>
+            <select class="form-select" id="f_gender">
+              <option value="female" selected>Female</option>
+              <option value="male">Male</option>
+              <option value="nonbinary">Non-binary</option>
+              <option value="prefer_not">Prefer not to say</option>
+            </select>
           </div>
+          <div class="form-group full">
+            <label class="form-label">Street Address</label>
+            <input class="form-input" id="f_addr" type="text" value="63724 Ramsey Way">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input class="form-input" id="f_city" type="text" value="Dallas">
+          </div>
+          <div class="form-group">
+            <label class="form-label">State</label>
+            <input class="form-input" id="f_state" type="text" value="TX" maxlength="2">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ZIP Code</label>
+            <input class="form-input" id="f_zip" type="text" value="75246" maxlength="5">
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-primary" onclick="goToStep(3)">Continue
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </div>
+    <div class="story-col">
+      <div class="story-panel">
+        <p class="story-tag">The Scenario</p>
+        <div class="story-avatar">👩</div>
+        <p class="story-name">Jenny Everywhere</p>
+        <p class="story-body">Jenny is looking to switch auto insurance carriers. She filled out her basic contact information, and Fenris Prefill will do the rest.</p>
+        <div class="story-callout">Prefill matches Jenny's identity to existing data records and populates her full profile — no manual entry required.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STEP 3: VEHICLES ========== -->
+<div class="step-view" id="view3">
+  <div class="step-bar">
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Applicant Info</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot active">2</div><span class="step-label active">Vehicles</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">3</div><span class="step-label">Household</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">4</div><span class="step-label">Member Detail</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">5</div><span class="step-label">Confirm</span></div>
   </div>
 
-  <!-- STEP 3: SUCCESS -->
-  <div class="step-view" id="view3">
+  <div class="two-col">
+    <div class="main-col">
+      <div class="card animate">
+        <div class="api-banner"><span class="api-dot"></span>2 vehicles found at this address</div>
+        <p class="card-title">Vehicle Information</p>
+        <p class="card-sub">Prefill found 2 registered vehicles at Jenny's address. Select the vehicles to include in this policy.</p>
+
+        <!-- Vehicle 1 -->
+        <div class="pv-wrap selected" id="pvwrap-v1">
+          <div class="pv-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9l2-4h14l2 4v6a2 2 0 0 1-2 2h-2"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>
+              <span class="pv-title">2014 ACURA ILX</span>
+            </div>
+            <div class="pv-toggle-wrap">
+              <span class="pv-toggle-label">Include</span>
+              <div class="pv-toggle on" id="toggle-v1" onclick="toggleVehicle('v1')"><div class="pv-toggle-knob"></div></div>
+            </div>
+          </div>
+          <div class="pv-details" id="details-v1">
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">VIN</label><input class="pv-select" type="text" value="19VDE1F72EE001847"></div>
+              <div class="pv-field"><label class="pv-label">Body Type</label>
+                <select class="pv-select"><option selected>Sedan</option><option>SUV</option><option>Truck</option><option>Coupe</option></select>
+              </div>
+            </div>
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">Ownership</label>
+                <select class="pv-select"><option selected>Owned</option><option>Leased</option><option>Financed</option></select>
+              </div>
+              <div class="pv-field"><label class="pv-label">Annual Mileage</label>
+                <select class="pv-select"><option>0–5,000</option><option selected>5,001–10,000</option><option>10,001–15,000</option><option>15,001+</option></select>
+              </div>
+            </div>
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">Primary Use</label>
+                <select class="pv-select"><option selected>Pleasure</option><option>Commute</option><option>Business</option></select>
+              </div>
+              <div class="pv-field"><label class="pv-label">Fuel Type</label>
+                <select class="pv-select"><option selected>Gas</option><option>Hybrid</option><option>Electric</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle 2 -->
+        <div class="pv-wrap selected" id="pvwrap-v2">
+          <div class="pv-header">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9l2-4h14l2 4v6a2 2 0 0 1-2 2h-2"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>
+              <span class="pv-title">2004 ACURA TL</span>
+            </div>
+            <div class="pv-toggle-wrap">
+              <span class="pv-toggle-label">Include</span>
+              <div class="pv-toggle on" id="toggle-v2" onclick="toggleVehicle('v2')"><div class="pv-toggle-knob"></div></div>
+            </div>
+          </div>
+          <div class="pv-details" id="details-v2">
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">VIN</label><input class="pv-select" type="text" value="19UUA56814A056231"></div>
+              <div class="pv-field"><label class="pv-label">Body Type</label>
+                <select class="pv-select"><option selected>Sedan</option><option>SUV</option><option>Truck</option><option>Coupe</option></select>
+              </div>
+            </div>
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">Ownership</label>
+                <select class="pv-select"><option selected>Owned</option><option>Leased</option><option>Financed</option></select>
+              </div>
+              <div class="pv-field"><label class="pv-label">Annual Mileage</label>
+                <select class="pv-select"><option>0–5,000</option><option selected>5,001–10,000</option><option>10,001–15,000</option><option>15,001+</option></select>
+              </div>
+            </div>
+            <div class="pv-field-row">
+              <div class="pv-field"><label class="pv-label">Primary Use</label>
+                <select class="pv-select"><option selected>Pleasure</option><option>Commute</option><option>Business</option></select>
+              </div>
+              <div class="pv-field"><label class="pv-label">Fuel Type</label>
+                <select class="pv-select"><option selected>Gas</option><option>Hybrid</option><option>Electric</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-bar" id="vehSummary"><strong>2 vehicles selected</strong>: 2014 ACURA ILX, 2004 ACURA TL</div>
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="goToStep(2)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary" onclick="goToStep(4)">Continue
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="story-col">
+      <div class="story-panel">
+        <p class="story-tag">Prefill at Work</p>
+        <div class="story-avatar">🚗</div>
+        <p class="story-name">Vehicles Found</p>
+        <p class="story-body">Prefill found both of Jenny's vehicles. All of the information is correct, but if Jenny wanted to make edits, include another vehicle, or exclude a vehicle, she has the option.</p>
+        <div class="story-callout">Fenris pulls vehicle registration data tied to Jenny's address — no VIN lookup or manual entry required.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STEP 4: HOUSEHOLD MEMBERS ========== -->
+<div class="step-view" id="view4">
+  <div class="step-bar">
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Applicant Info</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Vehicles</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot active">3</div><span class="step-label active">Household</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">4</div><span class="step-label">Member Detail</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">5</div><span class="step-label">Confirm</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="main-col">
+      <div class="card animate">
+        <div class="api-banner"><span class="api-dot"></span>1 household member found</div>
+        <p class="card-title">Household Members</p>
+        <p class="card-sub">Prefill identified an additional person at Jenny's address. Indicate whether to include them on this policy.</p>
+
+        <div class="hm-card" id="hmCard">
+          <div class="hm-top">
+            <div class="hm-identity">
+              <div class="hm-avatar">HD</div>
+              <div>
+                <p class="hm-name">Hugo Danner</p>
+                <div class="hm-pills">
+                  <span class="pill">Male</span>
+                  <span class="pill">Age 60</span>
+                  <span class="pill pill-teal">Household member</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding-top:4px;">
+            <span class="insure-label">Insure on this policy?</span>
+            <div class="insure-row">
+              <button class="insure-btn yes" id="hmYes" onclick="setInsure(true)">Yes</button>
+              <button class="insure-btn no" id="hmNo" onclick="setInsure(false)">No</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-bar warn" id="hmWarn" style="display:none;">You must select "Yes" to include Hugo Danner before continuing.</div>
+
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="goToStep(3)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary" onclick="continueHousehold()">Continue
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="story-col">
+      <div class="story-panel">
+        <p class="story-tag">Household Discovery</p>
+        <div class="story-avatar">👨‍👩‍👧</div>
+        <p class="story-name">Found at the Same Address</p>
+        <p class="story-body">Prefill is able to find other people living at the same address, making insuring additional household members a breeze.</p>
+        <div class="story-callout"><strong>Hugo Danner</strong> is Jenny's husband — let's make sure he is included in this quote.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STEP 5: MEMBER DETAIL ========== -->
+<div class="step-view" id="view5">
+  <div class="step-bar">
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Applicant Info</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Vehicles</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Household</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot active">4</div><span class="step-label active">Member Detail</span></div>
+    <div class="step-connector"></div>
+    <div class="step-item"><div class="step-dot">5</div><span class="step-label">Confirm</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="main-col">
+      <div class="card animate">
+        <div class="api-banner"><span class="api-dot"></span>Prefill data matched &mdash; Hugo Danner</div>
+        <p class="card-title">Additional Driver: Hugo Danner</p>
+        <p class="card-sub">Hugo's information has been prefilled. Review and edit any details before submitting.</p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" value="Hugo">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" value="Danner">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input class="form-input" type="text" value="11/12/1964">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gender</label>
+            <select class="form-select">
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+              <option value="nonbinary">Non-binary</option>
+              <option value="prefer_not">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">US License Type</label>
+            <select class="form-select">
+              <option value="standard" selected>Standard Driver's License</option>
+              <option value="commercial">Commercial (CDL)</option>
+              <option value="motorcycle">Motorcycle</option>
+              <option value="permit">Learner's Permit</option>
+              <option value="none">No License</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">License State</label>
+            <select class="form-select">
+              <option value="TX" selected>TX — Texas</option>
+              <option value="CA">CA — California</option>
+              <option value="FL">FL — Florida</option>
+              <option value="NY">NY — New York</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Insure on this policy?</label>
+            <div style="display:flex;gap:10px;margin-top:4px;">
+              <button class="insure-btn yes selected" id="detYes" onclick="setDetailInsure(true)" style="flex:0 0 auto;">Yes — Include Hugo</button>
+              <button class="insure-btn no" id="detNo" onclick="setDetailInsure(false)" style="flex:0 0 auto;">No — Exclude</button>
+            </div>
+          </div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-outline" onclick="goToStep(4)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn btn-success" onclick="submitApplication()">Submit Application
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="story-col">
+      <div class="story-panel">
+        <p class="story-tag">Almost Done</p>
+        <div class="story-avatar">🧔</div>
+        <p class="story-name">Hugo Danner</p>
+        <p class="story-body">Hugo's driving details have been prefilled from available records. Jenny can review and adjust anything before the final submission.</p>
+        <div class="story-callout">Adding household members is instant when Fenris Prefill already has their data on file.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== STEP 6: SUCCESS ========== -->
+<div class="step-view" id="view6">
+  <div class="step-bar">
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Applicant Info</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Vehicles</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Household</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Member Detail</span></div>
+    <div class="step-connector done"></div>
+    <div class="step-item"><div class="step-dot done">✓</div><span class="step-label">Confirm</span></div>
+  </div>
+  <div style="max-width:560px;margin:0 auto;">
     <div class="card">
       <div class="success-wrap">
-        <div class="success-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <p class="success-title">Application submitted</p>
-        <p class="success-body">Your quote request has been received. A licensed agent will follow up with a personalized auto insurance quote within 24 hours.</p>
+        <div class="success-icon">🎉</div>
+        <p class="success-title">Application Submitted!</p>
+        <p class="success-body">Thank you for helping Jenny Everywhere submit her car insurance quote application! Fenris Prefill handled the heavy lifting — no manual data entry required.</p>
+        <p class="success-time" id="elapsedDisplay"></p>
         <div class="ref-chip" id="refCode"></div>
+        <div style="margin-top:1.75rem;">
+          <button class="btn btn-outline" onclick="restartDemo()" style="margin:0 auto;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.3"/></svg>
+            Start Over
+          </button>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
 </main>
 
 <script>
-  const vehicles = [
-    {
-      id: 'v1',
-      year: '2014', make: 'ACURA', model: 'ILX',
-      vin: '19VDE1F72EE001847',
-      type: 'Sedan', fuel: 'Gas', mileage: '0–10,000'
-    },
-    {
-      id: 'v2',
-      year: '2004', make: 'ACURA', model: 'TL',
-      vin: '19UUA56814A056231',
-      type: 'Sedan', fuel: 'Gas', mileage: 'Not on file'
+  var selectedVehicles = new Set(['v1','v2']);
+  var hmInsure = null;
+  var jennyStartTime = null;
+
+  /* ---- GATE ---- */
+  function submitGate() {
+    var email = document.getElementById('gateEmail').value.trim();
+    var err = document.getElementById('gateErr');
+    var inp = document.getElementById('gateEmail');
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      inp.classList.add('error');
+      err.textContent = 'Please enter a valid email address.';
+      return;
     }
-  ];
+    inp.classList.remove('error');
+    err.textContent = '';
+    showView('view1');
+  }
+  document.getElementById('gateEmail').addEventListener('keydown', function(e){ if(e.key==='Enter') submitGate(); });
 
-  let selectedVehicles = new Set();
-  let applicantData = {};
-
-  // DOB auto-format
-  document.getElementById('dob').addEventListener('input', function () {
-    let v = this.value.replace(/\D/g, '');
-    if (v.length >= 5) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4, 8);
-    else if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-    this.value = v;
-  });
-
-  document.getElementById('state').addEventListener('input', function () {
-    this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '');
-  });
-
-  document.getElementById('zip').addEventListener('input', function () {
-    this.value = this.value.replace(/\D/g, '');
-  });
-
-  function setErr(id, msg) {
-    const el = document.getElementById('err-' + id);
-    const inp = document.getElementById(id);
-    if (el) el.textContent = msg;
-    if (inp) inp.classList.toggle('error', !!msg);
+  /* ---- PERSONA ---- */
+  function selectPersona(id) {
+    document.querySelectorAll('.persona-card:not(.coming-soon)').forEach(function(c){ c.classList.remove('selected'); });
+    document.getElementById('persona-'+id).classList.add('selected');
+    document.getElementById('personaBtn').disabled = false;
   }
 
-  function clearErrors() {
-    ['firstName','lastName','address','city','state','dob','zip'].forEach(f => setErr(f, ''));
+  function startJenny() {
+    jennyStartTime = Date.now();
+    showView('view2');
   }
 
-  function submitForm() {
-    clearErrors();
-    const f = id => document.getElementById(id).value.trim();
-    let ok = true;
-    if (!f('firstName')) { setErr('firstName', 'Required'); ok = false; }
-    if (!f('lastName')) { setErr('lastName', 'Required'); ok = false; }
-    if (!f('address')) { setErr('address', 'Required'); ok = false; }
-    if (!f('city')) { setErr('city', 'Required'); ok = false; }
-    if (!/^[A-Z]{2}$/.test(f('state'))) { setErr('state', 'Enter 2-letter state code (e.g. IL)'); ok = false; }
-    if (!/^\d{5}$/.test(f('zip'))) { setErr('zip', 'Enter a 5-digit ZIP'); ok = false; }
-    const dob = f('dob');
-    if (!/^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/.test(dob)) {
-      setErr('dob', 'Use MM/DD/YYYY format'); ok = false;
-    }
-    if (!ok) return;
-    applicantData = { firstName: f('firstName'), lastName: f('lastName'), address: f('address'), city: f('city'), state: f('state'), zip: f('zip'), dob };
-    goToStep(2);
-    setTimeout(loadPrefillData, 1600);
-  }
-
-  function loadPrefillData() {
-    const d = applicantData;
-
-    // Applicant table — no DL or license state shown on customer side
-    document.getElementById('applicantTable').innerHTML = `
-      <tr><td>Full name</td><td>${d.firstName.toUpperCase()} ${d.lastName.toUpperCase()}</td></tr>
-      <tr><td>Date of birth</td><td>${d.dob}</td></tr>
-      <tr><td>Address</td><td>${d.address}, ${d.city}, ${d.state} ${d.zip}</td></tr>
-    `;
-
-    const initials = (d.firstName[0] + d.lastName[0]).toUpperCase();
-
-    document.getElementById('driversContainer').innerHTML = `
-      <div class="driver-card">
-        <div class="driver-avatar avatar-primary">${initials}</div>
-        <div>
-          <p class="driver-name">${d.firstName} ${d.lastName}</p>
-          <div class="pill-row">
-            <span class="pill pill-primary">Primary applicant</span>
-            <span class="pill">DOB ${d.dob}</span>
-          </div>
-        </div>
-      </div>
-      <div class="driver-card">
-        <div class="driver-avatar avatar-secondary">HJD</div>
-        <div>
-          <p class="driver-name">Hugo J. Danner</p>
-          <div class="pill-row">
-            <span class="pill pill-household">Household member</span>
-            <span class="pill">DOB 11/12/1964 &middot; Age 61</span>
-            <span class="pill">Male</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Progressive-style vehicle selection with toggle + dropdowns
-    document.getElementById('vehiclesContainer').innerHTML = vehicles.map(v => `
-      <div class="pv-wrap" id="pvwrap-${v.id}">
-        <div class="pv-header">
-          <div class="pv-header-left">
-            <svg class="pv-car-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9l2-4h14l2 4v6a2 2 0 0 1-2 2h-2"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>
-            <span class="pv-title">${v.year} ${v.make} ${v.model}</span>
-          </div>
-          <label class="pv-toggle-wrap">
-            <span class="pv-toggle-label">Select Vehicle</span>
-            <div class="pv-toggle ${v.id === 'v1' ? 'on' : 'on'}" id="toggle-${v.id}" onclick="toggleVehicle('${v.id}')">
-              <div class="pv-toggle-knob"></div>
-            </div>
-          </label>
-        </div>
-        <div class="pv-details" id="details-${v.id}">
-          <div class="pv-field-row">
-            <div class="pv-field">
-              <label class="pv-label">Ownership Status <span class="req">*</span></label>
-              <select class="pv-select">
-                <option value="owned" selected>Owned</option>
-                <option value="leased">Leased</option>
-                <option value="financed">Financed</option>
-              </select>
-            </div>
-            <div class="pv-field">
-              <label class="pv-label">Annual Mileage <span class="req">*</span></label>
-              <select class="pv-select">
-                <option value="0-5000" selected>0–5,000</option>
-                <option value="5001-7500">5,001–7,500</option>
-                <option value="7501-10000">7,501–10,000</option>
-                <option value="10001+">10,001+</option>
-              </select>
-            </div>
-          </div>
-          <div class="pv-field-row">
-            <div class="pv-field">
-              <label class="pv-label">Primary Use <span class="req">*</span></label>
-              <select class="pv-select">
-                <option value="pleasure" selected>Pleasure</option>
-                <option value="commute">Commute</option>
-                <option value="business">Business</option>
-                <option value="commercial">Commercial</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-
-    // Pre-select both vehicles
-    vehicles.forEach(v => {
-      selectedVehicles.add(v.id);
-      document.getElementById('pvwrap-' + v.id).classList.add('selected');
-    });
-    updateSummary();
-
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('prefillContent').style.display = 'block';
-  }
-
+  /* ---- VEHICLE TOGGLES ---- */
   function toggleVehicle(id) {
-    const wrap = document.getElementById('pvwrap-' + id);
-    const toggle = document.getElementById('toggle-' + id);
-    const details = document.getElementById('details-' + id);
+    var wrap = document.getElementById('pvwrap-'+id);
+    var tog = document.getElementById('toggle-'+id);
+    var det = document.getElementById('details-'+id);
     if (selectedVehicles.has(id)) {
       selectedVehicles.delete(id);
       wrap.classList.remove('selected');
-      toggle.classList.remove('on');
-      details.style.opacity = '0.4';
-      details.style.pointerEvents = 'none';
+      tog.classList.remove('on');
+      det.style.opacity = '0.4';
+      det.style.pointerEvents = 'none';
     } else {
       selectedVehicles.add(id);
       wrap.classList.add('selected');
-      toggle.classList.add('on');
-      details.style.opacity = '1';
-      details.style.pointerEvents = '';
+      tog.classList.add('on');
+      det.style.opacity = '1';
+      det.style.pointerEvents = '';
     }
-    updateSummary();
+    updateVehSummary();
   }
-
-  function updateSummary() {
-    const n = selectedVehicles.size;
-    const bar = document.getElementById('summaryBar');
+  function updateVehSummary() {
+    var names = {'v1':'2014 ACURA ILX','v2':'2004 ACURA TL'};
+    var bar = document.getElementById('vehSummary');
+    var sel = Array.from(selectedVehicles);
     bar.classList.remove('warn');
-    if (n === 0) {
-      bar.innerHTML = 'No vehicles selected yet.';
-    } else {
-      const names = [...selectedVehicles].map(id => {
-        const v = vehicles.find(x => x.id === id);
-        return `${v.year} ${v.make} ${v.model}`;
-      }).join(', ');
-      bar.innerHTML = `<strong>${n} vehicle${n > 1 ? 's' : ''} selected:</strong> ${names}`;
-    }
+    if (!sel.length) { bar.classList.add('warn'); bar.innerHTML = 'Please select at least one vehicle.'; return; }
+    bar.innerHTML = '<strong>'+sel.length+' vehicle'+(sel.length>1?'s':'')+' selected</strong>: '+sel.map(function(v){return names[v];}).join(', ');
   }
 
-  function submitQuote() {
-    if (selectedVehicles.size === 0) {
-      const bar = document.getElementById('summaryBar');
-      bar.classList.add('warn');
-      bar.innerHTML = 'Please select at least one vehicle to continue.';
+  /* ---- HOUSEHOLD ---- */
+  function setInsure(val) {
+    hmInsure = val;
+    document.getElementById('hmYes').classList.toggle('selected', val===true);
+    document.getElementById('hmNo').classList.toggle('selected', val===false);
+    document.getElementById('hmWarn').style.display = 'none';
+  }
+  function continueHousehold() {
+    if (hmInsure !== true) {
+      document.getElementById('hmWarn').style.display = 'block';
       return;
     }
-    const ref = 'FNR-' + Date.now().toString(36).toUpperCase().slice(-8);
-    document.getElementById('refCode').textContent = 'Reference: ' + ref;
-    goToStep(3);
+    goToStep(5);
   }
 
-  function goBack() { goToStep(1); }
+  /* ---- DETAIL INSURE BUTTONS ---- */
+  function setDetailInsure(val) {
+    document.getElementById('detYes').classList.toggle('selected', val===true);
+    document.getElementById('detNo').classList.toggle('selected', val===false);
+  }
 
+  /* ---- SUBMIT ---- */
+  function submitApplication() {
+    var elapsed = jennyStartTime ? Date.now() - jennyStartTime : 0;
+    var secs = Math.round(elapsed / 1000);
+    var mins = Math.floor(secs / 60);
+    var timeStr = mins > 0 ? mins+'m '+( secs%60)+'s' : secs+'s';
+    document.getElementById('elapsedDisplay').textContent = '⏱ This only took ' + timeStr + ' from start to submission.';
+    document.getElementById('refCode').textContent = 'Reference: FNR-' + Date.now().toString(36).toUpperCase().slice(-8);
+    goToStep(6);
+  }
+
+  /* ---- NAV ---- */
   function goToStep(n) {
-    [1, 2, 3].forEach(i => {
-      document.getElementById('view' + i).classList.toggle('active', i === n);
+    var map = {2:'view2',3:'view3',4:'view4',5:'view5',6:'view6'};
+    showView(map[n] || 'view2');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function showView(id) {
+    document.querySelectorAll('.step-view').forEach(function(v){ v.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function restartDemo() {
+    hmInsure = null;
+    jennyStartTime = null;
+    selectedVehicles = new Set(['v1','v2']);
+    document.getElementById('hmYes').classList.remove('selected');
+    document.getElementById('hmNo').classList.remove('selected');
+    document.getElementById('hmWarn').style.display = 'none';
+    ['v1','v2'].forEach(function(id){
+      document.getElementById('pvwrap-'+id).classList.add('selected');
+      document.getElementById('toggle-'+id).classList.add('on');
+      document.getElementById('details-'+id).style.opacity = '';
+      document.getElementById('details-'+id).style.pointerEvents = '';
     });
-    [1, 2, 3].forEach(i => {
-      const dot = document.getElementById('dot' + i);
-      const lbl = document.getElementById('lbl' + i);
-      dot.classList.remove('active', 'done');
-      lbl.classList.remove('active');
-      if (i < n) {
-        dot.classList.add('done');
-        dot.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><polyline points="20 6 9 17 4 12"/></svg>';
-      } else if (i === n) {
-        dot.classList.add('active');
-        dot.textContent = i;
-        lbl.classList.add('active');
-      } else {
-        dot.textContent = i;
-      }
-    });
-    document.getElementById('line1').classList.toggle('done', n > 1);
-    document.getElementById('line2').classList.toggle('done', n > 2);
-    if (n === 2) {
-      document.getElementById('loadingState').style.display = 'flex';
-      document.getElementById('prefillContent').style.display = 'none';
-    }
+    updateVehSummary();
+    document.getElementById('gateEmail').value = '';
+    showView('view0');
   }
 </script>
 </body>
