@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://js.hsforms.net/forms/embed/4801226.js" defer></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -203,24 +204,10 @@
     <div style="font-size:52px;margin-bottom:1rem;">🚗</div>
     <p class="card-title" style="margin-bottom:0.4rem;">See Fenris Prefill in Action</p>
     <p style="font-size:14px;color:var(--gray-600);margin-bottom:2rem;line-height:1.6;">Enter your information to access the interactive demo and see how Fenris prefills insurance applications in real time.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;text-align:left;">
-      <div>
-        <input class="gate-input" id="gateFirst" type="text" placeholder="First name" autocomplete="given-name" style="width:100%;">
-        <span class="field-error" id="errFirst"></span>
-      </div>
-      <div>
-        <input class="gate-input" id="gateLast" type="text" placeholder="Last name" autocomplete="family-name" style="width:100%;">
-        <span class="field-error" id="errLast"></span>
-      </div>
+    <div style="text-align:left;">
+      <div class="hs-form-frame" data-region="na1" data-form-id="94f5e7ba-7739-4cb7-875a-7cce3e5cd20b" data-portal-id="4801226"></div>
     </div>
-    <div class="gate-row">
-      <input class="gate-input" id="gateEmail" type="email" placeholder="you@company.com" autocomplete="email">
-      <button class="btn btn-primary" onclick="submitGate()">Access Demo
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-    <span class="field-error" id="gateErr"></span>
-    <p class="gate-note">For demonstration purposes only. No data is stored or transmitted.</p>
+    <p class="gate-note" style="margin-top:12px;">For demonstration purposes only.</p>
   </div>
 </div>
 
@@ -714,25 +701,12 @@
   var jennyStartTime = null;
 
   /* ---- GATE ---- */
-  function submitGate() {
-    var first = document.getElementById('gateFirst').value.trim();
-    var last  = document.getElementById('gateLast').value.trim();
-    var email = document.getElementById('gateEmail').value.trim();
-    var ok = true;
-    ['errFirst','errLast','gateErr'].forEach(function(id){ document.getElementById(id).textContent=''; });
-    ['gateFirst','gateLast','gateEmail'].forEach(function(id){ document.getElementById(id).classList.remove('error'); });
-    if (!first) { document.getElementById('gateFirst').classList.add('error'); document.getElementById('errFirst').textContent='Required'; ok=false; }
-    if (!last)  { document.getElementById('gateLast').classList.add('error');  document.getElementById('errLast').textContent='Required';  ok=false; }
-    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      document.getElementById('gateEmail').classList.add('error');
-      document.getElementById('gateErr').textContent = 'Please enter a valid email address.';
-      ok=false;
+  /* ---- GATE — check for ?demo=true on load, else show HubSpot form ---- */
+  document.addEventListener('DOMContentLoaded', function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === 'true') {
+      showView('view1');
     }
-    if (!ok) return;
-    showView('view1');
-  }
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Enter' && document.getElementById('view0').classList.contains('active')) submitGate();
   });
 
   /* ---- LOADING SEQUENCE ---- */
@@ -1039,11 +1013,7 @@
     document.getElementById('detYes').classList.add('selected');
     document.getElementById('detNo').classList.remove('selected');
     document.getElementById('loadingBar').style.width = '0%';
-    document.getElementById('gateFirst').value = '';
-    document.getElementById('gateLast').value = '';
-    document.getElementById('gateEmail').value = '';
-    ['errFirst','errLast','gateErr'].forEach(function(id){ document.getElementById(id).textContent=''; });
-    ['gateFirst','gateLast','gateEmail'].forEach(function(id){ document.getElementById(id).classList.remove('error'); });
+
     document.getElementById('loadingMsg').textContent = 'Authenticating session...';
     document.getElementById('loadingMs').textContent = '-';
     showView('view0');
