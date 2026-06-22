@@ -497,7 +497,7 @@
       <div class="card animate">
         <div class="api-banner"><span class="api-dot"></span>1 household member found</div>
         <p class="card-title">Household Members</p>
-        <p class="card-sub">We found 1 additional household member. Select or add additional drivers.</p>
+        <p class="card-sub">We found 1 additional household member. Select found household member(s) you wish to include. Add additional drivers on the next page.</p>
 
         <div class="hm-card" id="hmCard">
           <div class="hm-top">
@@ -507,7 +507,7 @@
                 <p class="hm-name">Hugo Danner</p>
                 <div class="hm-pills">
                   <span class="pill">Male</span>
-                  <span class="pill">Age 60</span>
+                  <span class="pill">Age 61</span>
                   <span class="pill pill-teal">Household member</span>
                 </div>
               </div>
@@ -544,6 +544,19 @@
         <div class="story-callout"><strong>Hugo Danner</strong> is Jenny's husband. Let's make sure he is included in this quote.</div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ========== LOADING: HUGO PREFILL ========== -->
+<div class="step-view" id="viewLoadingHugo">
+  <div style="max-width:500px;margin:5rem auto;text-align:center;">
+    <div style="font-size:48px;margin-bottom:1.5rem;">⚡</div>
+    <p style="font-size:18px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Retrieving Prefill Data</p>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:2rem;" id="loadingMsgHugo">Querying Fenris API…</p>
+    <div style="background:var(--gray-100);border-radius:999px;height:6px;width:320px;margin:0 auto;overflow:hidden;">
+      <div id="loadingBarHugo" style="height:100%;background:var(--teal);width:0%;border-radius:999px;transition:width 0.15s ease;"></div>
+    </div>
+    <p style="font-size:11px;color:var(--gray-500);margin-top:1rem;">Response time: <span id="loadingMsHugo">—</span></p>
   </div>
 </div>
 
@@ -640,9 +653,21 @@
         <p class="story-tag">Almost Done</p>
         <div class="story-avatar">🧔</div>
         <p class="story-name">Hugo Danner</p>
-        <p class="story-body">Hugo's driving details have been prefilled from available records. Jenny can review and adjust anything before the final submission.</p>
+        <p class="story-body">Hugo's driving details have been prefilled from available records. Jenny can review and edit any details before the final submission.</p>
         <div class="story-callout">Prefill can find additional household members at the same address, including minors who are of eligible driving age.</div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOADING: POST-SUBMIT ========== -->
+<div class="step-view" id="viewLoadingSubmit">
+  <div style="max-width:500px;margin:5rem auto;text-align:center;">
+    <div style="font-size:48px;margin-bottom:1.5rem;">📋</div>
+    <p style="font-size:18px;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Submitting Application</p>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:2rem;" id="loadingMsgSubmit">Submitting application…</p>
+    <div style="background:var(--gray-100);border-radius:999px;height:6px;width:320px;margin:0 auto;overflow:hidden;">
+      <div id="loadingBarSubmit" style="height:100%;background:var(--teal);width:0%;border-radius:999px;transition:width 0.15s ease;"></div>
     </div>
   </div>
 </div>
@@ -723,7 +748,6 @@
       [0,   'Querying Fenris API…'],
       [30,  'Matching identity…'],
       [60,  'Retrieving vehicle data…'],
-      [90,  'Building prefill response…'],
       [100, 'Data retrieved.']
     ];
     var i = 0;
@@ -874,7 +898,34 @@
   }
   function continueHousehold() {
     if (hmInsure !== true) { document.getElementById('hmWarn').style.display = 'block'; return; }
-    goToStep(5);
+    showView('viewLoadingHugo');
+    runLoadingHugo();
+  }
+  function runLoadingHugo() {
+    var bar = document.getElementById('loadingBarHugo');
+    var msg = document.getElementById('loadingMsgHugo');
+    var ms  = document.getElementById('loadingMsHugo');
+    var steps = [
+      [0,   'Querying Fenris API…'],
+      [30,  'Matching identity…'],
+      [60,  'Retrieving driver data…'],
+      [100, 'Data retrieved.']
+    ];
+    var i = 0;
+    function next() {
+      if (i >= steps.length) {
+        ms.textContent = '2 ms';
+        setTimeout(function(){ goToStep(5); }, 350);
+        return;
+      }
+      bar.style.width = steps[i][0] + '%';
+      msg.textContent = steps[i][1];
+      i++;
+      setTimeout(next, i === steps.length ? 400 : 190);
+    }
+    bar.style.width = '0%';
+    ms.textContent = '—';
+    setTimeout(next, 80);
   }
 
   /* ---- DETAIL INSURE ---- */
@@ -932,7 +983,29 @@
     var mins = Math.floor(secs / 60);
     var timeStr = mins > 0 ? mins + 'm ' + (secs % 60) + 's' : secs + 's';
     document.getElementById('elapsedDisplay').textContent = 'This application only took ' + timeStr + ' from start to submission.';
-    goToStep(6);
+    showView('viewLoadingSubmit');
+    runLoadingSubmit();
+  }
+  function runLoadingSubmit() {
+    var bar = document.getElementById('loadingBarSubmit');
+    var msg = document.getElementById('loadingMsgSubmit');
+    var steps = [
+      [0,   'Submitting application…'],
+      [100, 'Submitting application…']
+    ];
+    var i = 0;
+    function next() {
+      if (i >= steps.length) {
+        setTimeout(function(){ goToStep(6); }, 350);
+        return;
+      }
+      bar.style.width = steps[i][0] + '%';
+      msg.textContent = steps[i][1];
+      i++;
+      setTimeout(next, i === steps.length ? 400 : 200);
+    }
+    bar.style.width = '0%';
+    setTimeout(next, 80);
   }
 
   /* ---- NAV ---- */
@@ -965,12 +1038,12 @@
     document.getElementById('hmWarn').style.display = 'none';
     document.getElementById('detYes').classList.add('selected');
     document.getElementById('detNo').classList.remove('selected');
+    document.getElementById('loadingBar').style.width = '0%';
     document.getElementById('gateFirst').value = '';
     document.getElementById('gateLast').value = '';
     document.getElementById('gateEmail').value = '';
     ['errFirst','errLast','gateErr'].forEach(function(id){ document.getElementById(id).textContent=''; });
     ['gateFirst','gateLast','gateEmail'].forEach(function(id){ document.getElementById(id).classList.remove('error'); });
-    document.getElementById('loadingBar').style.width = '0%';
     document.getElementById('loadingMsg').textContent = 'Authenticating session...';
     document.getElementById('loadingMs').textContent = '-';
     showView('view0');
