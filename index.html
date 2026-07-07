@@ -232,7 +232,7 @@
 
   /* TOOLTIP */
   .tooltip-wrap { position: relative; display: inline-flex; align-items: center; }
-  .tooltip-icon { width: 15px; height: 15px; border-radius: 50%; background: var(--gray-400); color: var(--white); font-size: 9px; font-weight: 700; font-style: normal; display: flex; align-items: center; justify-content: center; cursor: default; flex-shrink: 0; line-height: 1; }
+  .tooltip-icon { width: 15px; height: 15px; border-radius: 50%; background: var(--gray-400); color: var(--white); font-size: 10px; font-weight: 400; font-style: italic; font-family: Georgia, serif; display: flex; align-items: center; justify-content: center; cursor: default; flex-shrink: 0; line-height: 1; }
   .tooltip-wrap:hover .tooltip-box { opacity: 1; pointer-events: auto; }
   .tooltip-box { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); background: var(--navy); color: #fff; font-size: 12px; font-weight: 400; line-height: 1.5; padding: 8px 12px; border-radius: 8px; width: 240px; white-space: normal; text-transform: none; letter-spacing: 0; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
   .tooltip-box::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--navy); }
@@ -259,7 +259,7 @@
     <div style="text-align:left;">
       <div class="hs-form-frame" data-region="na1" data-form-id="94f5e7ba-7739-4cb7-875a-7cce3e5cd20b" data-portal-id="4801226"></div>
     </div>
-    <p class="gate-note" style="margin-top:12px;">This is a demonstration of Fenris Auto &amp; Property Prefill. By submitting, you agree to our <a href="https://fenrisd.com/privacy-policy/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);">Privacy Policy</a> and may receive follow-up communications from Fenris.</p>
+    <p class="gate-note" style="margin-top:12px;">This is a demonstration of Fenris Auto &amp; Property Prefill.<br>By submitting, you agree to our <a href="https://fenrisd.com/privacy-policy/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);">Privacy Policy</a> and may receive follow-up communications from Fenris.</p>
   </div>
 </div>
 
@@ -810,8 +810,8 @@
         <p class="story-tag">The Scenario</p>
         <div class="story-avatar">🧔</div>
         <p class="story-name">Kyle Murdock</p>
-        <p class="story-body">Kyle is looking to get a homeowner's insurance quote for his property in Highlands Ranch, CO. He's filled out his basic contact information — Fenris Property Prefill will do the rest.</p>
-        <div class="story-callout">Prefill will match Kyle's identity and address to property records and populate his home's details so he can receive an accurate quote with ease.</div>
+        <p class="story-body">Kyle recently put in a deposit on a home in Highlands Ranch, CO. He is looking for a homeowner's insurance policy before his closing date. He has filled in the address, and Fenris Property Prefill will help him fill out the rest.</p>
+        <div class="story-callout">While Kyle submitted his name so the person delivering his quote knows who to address, Fenris Property Prefill only requires an address to retrieve a variety of details on a residential or commercial property.</div>
       </div>
     </div>
   </div>
@@ -846,7 +846,7 @@
       <div class="card animate">
         <div class="api-banner"><span class="api-dot"></span>Property data matched — 18595 Old Aldrin Highway</div>
         <p class="card-title">Property Overview</p>
-        <p class="card-sub">Kyle's property information has been prefilled from available records. Review and edit any details before continuing.</p>
+        <p class="card-sub">We found some information about this property and filled it out for you below. Review and edit details for accuracy before continuing.</p>
 
         <!-- PROPERTY accordion -->
         <div class="accordion open" id="acc-property">
@@ -1170,7 +1170,7 @@
                 <label class="form-label">Basement type <span class="prefilled-tag">Prefilled</span></label>
                 <select class="form-select">
                   <option value="">Select…</option>
-                  <option>Basement (not specified)</option>
+                  <option selected>Basement (not specified)</option>
                   <option>Basement, no longer in use</option>
                   <option>Daylight / Walkout</option>
                   <option>Daylight, Full</option>
@@ -1178,7 +1178,7 @@
                   <option>Full Basement</option>
                   <option>Improved Basement (Finished)</option>
                   <option>Partial Basement</option>
-                  <option selected>Unfinished Basement</option>
+                  <option>Unfinished Basement</option>
                 </select>
               </div>
             </div>
@@ -1213,6 +1213,14 @@
                   <button class="counter-btn" onclick="changeCounter('halfBath',-1)">−</button>
                   <div class="counter-val" id="halfBathVal">1</div>
                   <button class="counter-btn" onclick="changeCounter('halfBath',1)">+</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bedrooms <span class="prefilled-tag">Prefilled</span></label>
+                <div class="counter-wrap">
+                  <button class="counter-btn" onclick="changeCounter('bedrooms',-1)">−</button>
+                  <div class="counter-val" id="bedroomsVal">4</div>
+                  <button class="counter-btn" onclick="changeCounter('bedrooms',1)">+</button>
                 </div>
               </div>
               <div class="form-group">
@@ -1285,13 +1293,13 @@
                 </select>
               </div>
               <div class="form-group full">
-                <label class="form-label">Heating fuel type</label>
+                <label class="form-label">Heating fuel type <span class="prefilled-tag">Prefilled</span></label>
                 <select class="form-select">
                   <option value="">Select…</option>
                   <option>Butane</option>
                   <option>Coal</option>
                   <option>Electric</option>
-                  <option>Gas</option>
+                  <option selected>Gas</option>
                   <option>Geo-Thermal</option>
                   <option>None</option>
                   <option>Oil</option>
@@ -1320,8 +1328,8 @@
         <p class="story-tag">Prefill at Work</p>
         <div class="story-avatar">🏠</div>
         <p class="story-name">Property Data Retrieved</p>
-        <p class="story-body">Kyle's property details have been prefilled from public records. He can review and edit any details before continuing — no manual lookup required.</p>
-        <div class="story-callout">Fenris pulls property data tied to Kyle's address in real-time — year built, square footage, construction type, and more.</div>
+        <p class="story-body">The property details from the address provided have been retrieved. Kyle can now review and edit any details before continuing. Prefill solutions such as this one can reduce about 90% of manual input!</p>
+        <div class="story-callout">Fenris sources its Property data from multiple sources, including government, public, and third-party records. Data refreshes weekly, and new data sources are added regularly to keep information fresh and accurate.</div>
       </div>
     </div>
   </div>
@@ -1453,7 +1461,7 @@
         <p class="story-tag">Almost Done</p>
         <div class="story-avatar">📋</div>
         <p class="story-name">Final Details</p>
-        <p class="story-body">A few final details help the insurer understand Kyle's property risk profile. These are standard questions that complete the picture prefill started.</p>
+        <p class="story-body">Select additional features for the property Kyle wishes to insure. These are standard questions that complete the picture after the most important aspects were prefilled.</p>
         <div class="story-callout">Prefill can find additional household members at the same address, including minors who are of eligible driving age.</div>
       </div>
     </div>
@@ -1489,7 +1497,7 @@
         <div class="success-icon">🎉</div>
         <p class="success-title">Application Submitted!</p>
         <p class="success-body">Thank you for helping Kyle Murdock submit his application. An agent will be in touch with him shortly with his quote.</p>
-        <p style="font-size:14px;color:var(--navy);font-weight:500;max-width:420px;margin:0 auto 1.5rem;line-height:1.6;">Fenris Prefill helps insurers quote with better, more accurate data — retrieved in real-time.</p>
+        <p style="font-size:14px;color:var(--navy);font-weight:500;max-width:420px;margin:0 auto 1.5rem;line-height:1.6;">Fenris Property Prefill delivers attributes for any U.S. address in real-time. Retrieve building characteristics, valuation information, mortgage &amp; lien details, and ownership data through seamless API integration.</p>
         <p class="success-time" id="pElapsedDisplay"></p>
 
         <div style="margin:2rem auto 0;max-width:480px;background:var(--navy);border-radius:12px;padding:1.75rem 2rem;text-align:center;">
@@ -1526,7 +1534,7 @@
   var customVehicleCount = 0;
   var additionalDriverCount = 0;
   var hmInsure = null;
-  var counters = { fullBath: 3, halfBath: 1, fireplace: 0, garageSpaces: 2 };
+  var counters = { fullBath: 3, halfBath: 1, fireplace: 0, garageSpaces: 2, bedrooms: 4 };
   var garageOn = true;
   var poolOn = true;
   var basementOn = true;
@@ -1832,7 +1840,7 @@
   /* ===== PROPERTY — COUNTERS ===== */
   function changeCounter(key, delta) {
     counters[key] = Math.max(0, Math.min(10, counters[key] + delta));
-    var ids = {fullBath:'fullBathVal', halfBath:'halfBathVal', fireplace:'fireplaceVal', garageSpaces:'garageSpacesVal'};
+    var ids = {fullBath:'fullBathVal', halfBath:'halfBathVal', fireplace:'fireplaceVal', garageSpaces:'garageSpacesVal', bedrooms:'bedroomsVal'};
     document.getElementById(ids[key]).textContent = counters[key];
     if (key === 'fireplace') document.getElementById('fireplaceTypeWrap').style.display = counters.fireplace > 0 ? 'flex' : 'none';
   }
@@ -1902,7 +1910,7 @@
   function restartDemo() {
     selectedPersona = null; jennyStartTime = null; kyleStartTime = null;
     selectedVehicles = new Set(['v1','v2']); customVehicleCount = 0; additionalDriverCount = 0;
-    hmInsure = null; counters = {fullBath:3, halfBath:1, fireplace:0, garageSpaces:2};
+    hmInsure = null; counters = {fullBath:3, halfBath:1, fireplace:0, garageSpaces:2, bedrooms:4};
     garageOn = true; poolOn = true; basementOn = true;
     document.getElementById('personaBtn').disabled = true;
     document.querySelectorAll('.persona-card:not(.coming-soon)').forEach(function(c){ c.classList.remove('selected'); });
@@ -1921,6 +1929,7 @@
     var detNo  = document.getElementById('detNo');  if (detNo)  detNo.classList.remove('selected');
     var fbv = document.getElementById('fullBathVal'); if (fbv) fbv.textContent = '3';
     var hbv = document.getElementById('halfBathVal'); if (hbv) hbv.textContent = '1';
+    var bdrv = document.getElementById('bedroomsVal'); if (bdrv) bdrv.textContent = '4';
     var fpv = document.getElementById('fireplaceVal'); if (fpv) fpv.textContent = '0';
     var ftw = document.getElementById('fireplaceTypeWrap'); if (ftw) ftw.style.display = 'none';
     var gy = document.getElementById('garageYes'); if (gy) gy.classList.add('active');
