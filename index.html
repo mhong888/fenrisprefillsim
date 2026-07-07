@@ -773,36 +773,24 @@
             <label class="form-label">Last Name</label>
             <input class="form-input" type="text" value="Murdock">
           </div>
-          <div class="form-group">
-            <label class="form-label">Date of Birth</label>
-            <input class="form-input" type="text" value="05/20/1970">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Gender</label>
-            <select class="form-select">
-              <option value="male" selected>Male</option>
-              <option value="female">Female</option>
-              <option value="nonbinary">Non-binary</option>
-              <option value="prefer_not">Prefer not to say</option>
-            </select>
-          </div>
           <div class="form-group full">
-            <label class="form-label">Street Address</label>
-            <input class="form-input" type="text" value="18595 Old Aldrin Highway">
+            <label class="form-label">Street Address <span style="color:var(--danger)">*</span></label>
+            <input class="form-input" id="p_addr" type="text" value="18595 Old Aldrin Highway">
           </div>
           <div class="form-group">
-            <label class="form-label">City</label>
-            <input class="form-input" type="text" value="Highlands Ranch">
+            <label class="form-label">City <span style="color:var(--danger)">*</span></label>
+            <input class="form-input" id="p_city" type="text" value="Highlands Ranch">
           </div>
           <div class="form-group">
-            <label class="form-label">State</label>
-            <input class="form-input" type="text" value="CO" maxlength="2">
+            <label class="form-label">State <span style="color:var(--danger)">*</span></label>
+            <input class="form-input" id="p_state" type="text" value="CO" maxlength="2">
           </div>
           <div class="form-group">
-            <label class="form-label">ZIP Code</label>
-            <input class="form-input" type="text" value="80126" maxlength="5">
+            <label class="form-label">ZIP Code <span style="color:var(--danger)">*</span></label>
+            <input class="form-input" id="p_zip" type="text" value="80126" maxlength="5">
           </div>
         </div>
+        <div class="summary-bar warn" id="pGateWarn" style="display:none;">Please fill in all required address fields before continuing.</div>
         <div class="action-row">
           <button class="btn btn-primary" onclick="startPropertyPrefill()">Continue
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1537,18 +1525,25 @@
   var basementOn = true;
 
   /* ===== GATE ===== */
-  /* ---- GATE: HubSpot form callback + ?demo=true URL check + sessionStorage skip ---- */
+  /* ---- GATE: skip if already unlocked this session or ?demo=true ---- */
   document.addEventListener('DOMContentLoaded', function() {
     var params = new URLSearchParams(window.location.search);
-    if (params.get('demo') === 'true' || sessionStorage.getItem('demoUnlocked')) showView('view1');
-  });
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'hsFormCallback' &&
-        e.data.eventName === 'onFormSubmitted' &&
-        e.data.id === '94f5e7ba-7739-4cb7-875a-7cce3e5cd20b') {
-      sessionStorage.setItem('demoUnlocked', 'true');
+    if (params.get('demo') === 'true' || sessionStorage.getItem('demoUnlocked')) {
       showView('view1');
+      return;
     }
+    /* Watch for HubSpot swapping the form out for a thank-you message */
+    var gateWrap = document.querySelector('#view0 .hs-form-frame');
+    if (!gateWrap) return;
+    var observer = new MutationObserver(function() {
+      var submitted = document.querySelector('#view0 .submitted-message, #view0 [class*="submitted"]');
+      if (submitted) {
+        observer.disconnect();
+        sessionStorage.setItem('demoUnlocked', 'true');
+        showView('view1');
+      }
+    });
+    observer.observe(document.getElementById('view0'), { childList: true, subtree: true });
   });
 
   /* ===== PERSONA PICKER ===== */
@@ -1795,6 +1790,19 @@
 
   /* ===== PROPERTY — LOADING ===== */
   function startPropertyPrefill() {
+    var addr = document.getElementById('p_addr').value.trim();
+    var city = document.getElementById('p_city').value.trim();
+    var state = document.getElementById('p_state').value.trim();
+    var zip  = document.getElementById('p_zip').value.trim();
+    if (!addr || !city || !state || !zip) {
+      document.getElementById('pGateWarn').style.display = 'block';
+      ['p_addr','p_city','p_state','p_zip'].forEach(function(id){
+        var el = document.getElementById(id);
+        el.classList.toggle('error', !el.value.trim());
+      });
+      return;
+    }
+    document.getElementById('pGateWarn').style.display = 'none';
     showView('pviewLoadingProperty');
     var bar = document.getElementById('pLoadingBarProp');
     var msg = document.getElementById('pLoadingMsgProp');
