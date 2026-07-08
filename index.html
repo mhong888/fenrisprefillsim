@@ -1783,7 +1783,6 @@
     var elapsed = jennyStartTime ? Date.now() - jennyStartTime : 0;
     var secs = Math.round(elapsed / 1000); var mins = Math.floor(secs / 60);
     var timeStr = mins > 0 ? mins + 'm ' + (secs % 60) + 's' : secs + 's';
-    document.getElementById('elapsedDisplay').textContent = 'This application only took ' + timeStr + ' from start to submission.';
     document.getElementById('ctaHeadline').textContent = 'This application took ' + timeStr + ' to complete. Imagine that at scale.';
     showView('viewLoadingSubmit');
     var bar = document.getElementById('loadingBarSubmit');
@@ -1877,7 +1876,6 @@
     var elapsed = kyleStartTime ? Date.now() - kyleStartTime : 0;
     var secs = Math.round(elapsed / 1000); var mins = Math.floor(secs / 60);
     var timeStr = mins > 0 ? mins + 'm ' + (secs % 60) + 's' : secs + 's';
-    document.getElementById('pElapsedDisplay').textContent = 'This application only took ' + timeStr + ' from start to submission.';
     document.getElementById('pCtaHeadline').textContent = 'This application took ' + timeStr + ' to complete. Imagine that at scale.';
     showView('pviewLoadingSubmit');
     var bar = document.getElementById('pLoadingBarSubmit');
